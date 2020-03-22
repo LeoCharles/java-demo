@@ -7,7 +7,7 @@ package demo09;
  *
  */
 
-public class demo09Main {
+public class Demo09Main {
 
 
     public static void main(String[] args) {

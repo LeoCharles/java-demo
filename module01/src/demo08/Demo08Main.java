@@ -9,7 +9,7 @@ package demo08;
  * 不同包子类(我儿子)       yes            yes               no             no
  * 不同包非子类(陌生人)     yes            no                no             no
  */
-public class demo08Main {
+public class Demo08Main {
     public static void main(String[] args) {
 
     }
