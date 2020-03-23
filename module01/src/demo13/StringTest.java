@@ -10,15 +10,19 @@ package demo13;
  *
  * 字符串 --> 基本类型
  * 包装类的静态方法 parseXXXX("字符串");
- * Integer类：static int parseInt(Sting s);
- * Double类： static double parseDouble(Sting s);
+ * public static byte parseByte(String s)：将字符串参数转换为对应的byte基本类型。
+ * public static short parseShort(String s)：将字符串参数转换为对应的short基本类型。
+ * public static int parseInt(String s)：将字符串参数转换为对应的int基本类型。
+ * public static long parseLong(String s)：将字符串参数转换为对应的long基本类型。
+ * public static float parseFloat(String s)：将字符串参数转换为对应的float基本类型。
+ * public static double parseDouble(String s)：将字符串参数转换为对应的double基本类型。
+ * public static boolean parseBoolean(String s)：将字符串参数转换为对应的boolean基本类型。
  *
  *
  */
 public class StringTest {
 
     public static void main(String[] args) {
-
 
         // 基本类型 --> 字符串
         int i1 = 100;
@@ -32,8 +36,18 @@ public class StringTest {
         System.out.println(s3 + 200);
 
         // 字符串  -->  基本类型
-        int int1 = Integer.parseInt(s1);
-        System.out.println(int1 + 200);
+        int int1 = Integer.parseInt("100");
+        System.out.println(int1);
+        boolean bool1 = Boolean.parseBoolean("false");
+        System.out.println(bool1);
+        double dou1 = Double.parseDouble("3.3");
+        System.out.println(dou1);
+        byte by1 = Byte.parseByte("1");
+        System.out.println(by1);
+        long long1 = Long.parseLong("500");
+        System.out.println(long1);
+        short short1 = Short.parseShort("22");
+        System.out.println(short1);
 
     }
 }
