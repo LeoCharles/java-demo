@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Set 存储自定义对象，必须重写 hashcode 和 equals
  */
-public class Person {
+public class Person implements Comparable<Person>{
     private String name;
     private int age;
 
@@ -41,6 +41,14 @@ public class Person {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    // 重写 compareTo 方法
+    @Override
+    public int compareTo(Person person) {
+        // 按照年龄排序
+        return this.getAge() - person.getAge(); // 升序
+        //return  person.getAge() - this.getAge(); // 降序
     }
 
     public String getName() {
