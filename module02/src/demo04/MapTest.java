@@ -1,9 +1,6 @@
 package demo04;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * java.util.Map 映射
@@ -36,17 +33,28 @@ import java.util.Set;
  * HashMap 哈希表底层是数组 + 单向链表/红黑树，查询速度快
  * HashMap 是一个无序集合，存储元素和取出元素的顺序可能不一致
  *
+ * HashMap 存储自定义类型键值
+ * Map 集合保证 key 唯一，必须重写 hashCode 方法和 equals 方法
+ *
+ *
  * java.util.LinkedHashMap 集合 extends HashMap<k, v> 集合
  * 特点：
  * LinkedHashMap 底层是哈希表 + 链表
  * LinkedHashMap 是一个有序集合
  *
+
  *
  */
 public class MapTest {
     public static void main(String[] args) {
 
-        testMapMethod();
+        //testMapMethod();
+
+        //testHashMap01();
+
+        //testHashMap02();
+
+        testLinkedHashMap();
     }
 
     public static void testMapMethod() {
@@ -95,4 +103,51 @@ public class MapTest {
 
     }
 
+    public static void testHashMap01() {
+        // HashMap 存储自定义类型键值
+        // key: String 类型，已经重写了 hashCode 和 equals 方法
+        // value: Person 类型。可以重复
+        HashMap<String, Person> map = new HashMap<>();
+        map.put("武汉", new Person("Leo", 20));
+        map.put("上海", new Person("Eve", 23));
+        map.put("广州", new Person("Van", 34));
+        map.put("重庆", new Person("Rex", 30));
+        // 遍历 Map 集合
+        for (String k : map.keySet()) {
+            Person p = map.get(k);
+            System.out.println(k + "-->" + p);
+        }
+    }
+
+    public static void testHashMap02() {
+        // HashMap 存储自定义类型键值
+        // key: Person 类型，必须重写 hashCode 和 equals
+        // value: String 类型，可以重复
+        HashMap<Person, String> map = new HashMap<>();
+        map.put(new Person("Leo", 20), "武汉");
+        map.put(new Person("Rex", 24), "北京");
+        map.put(new Person("Van", 30), "杭州");
+        map.put(new Person("Leo", 20), "成都"); // key 重复会替换原来的value
+        // 使用 entrySet() 和 增强 for 遍历 Map
+        Set<Map.Entry<Person, String>> entries = map.entrySet();
+        for (Map.Entry<Person, String> entry : entries) {
+            System.out.println(entry.getKey() + "-->" + entry.getValue());
+        }
+    }
+
+    public static void testLinkedHashMap() {
+        // hashMap 是无序集合，存和取的顺序可能不一致
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("A", "aaa");
+        hashMap.put("C", "ccc");
+        hashMap.put("B", "bbb");
+        System.out.println(hashMap);
+
+        // LinkedHashMap 存和取的顺序一致
+        LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put("A", "aaa");
+        linkedHashMap.put("C", "ccc");
+        linkedHashMap.put("B", "bbb");
+        System.out.println(linkedHashMap);
+    }
 }
