@@ -42,15 +42,6 @@ import java.util.*;
  * LinkedHashMap 底层是哈希表 + 链表
  * LinkedHashMap 是一个有序集合
  *
- * JDK 9 新特性：
- * List 接口，Set 接口，Map 接口 增加了一个静态方法 of ，可以一次性给集合添加多个元素
- * 前提是，集合中存储的元素个数已经确定
- *
- * 注意：
- * 1. of 方法只适用 List接口、Set接口、Map接口，不适用接口的实现类
- * 2. of 的返回值是一个不能改变的集合，不能再使用 add、put 方法
- * 3. Set接口、Map接口在使用 of 方法时，不能有重复的元素
- *
  */
 public class MapTest {
     public static void main(String[] args) {
@@ -63,7 +54,7 @@ public class MapTest {
 
         //testLinkedHashMap();
 
-        //getCharacterCount();
+        getCharacterCount();
     }
 
     public static void testMapMethod() {
