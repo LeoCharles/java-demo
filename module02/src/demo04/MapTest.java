@@ -42,7 +42,14 @@ import java.util.*;
  * LinkedHashMap 底层是哈希表 + 链表
  * LinkedHashMap 是一个有序集合
  *
-
+ * JDK 9 新特性：
+ * List 接口，Set 接口，Map 接口 增加了一个静态方法 of ，可以一次性给集合添加多个元素
+ * 前提是，集合中存储的元素个数已经确定
+ *
+ * 注意：
+ * 1. of 方法只适用 List接口、Set接口、Map接口，不适用接口的实现类
+ * 2. of 的返回值是一个不能改变的集合，不能再使用 add、put 方法
+ * 3. Set接口、Map接口在使用 of 方法时，不能有重复的元素
  *
  */
 public class MapTest {
@@ -54,7 +61,9 @@ public class MapTest {
 
         //testHashMap02();
 
-        testLinkedHashMap();
+        //testLinkedHashMap();
+
+        //getCharacterCount();
     }
 
     public static void testMapMethod() {
@@ -149,5 +158,37 @@ public class MapTest {
         linkedHashMap.put("C", "ccc");
         linkedHashMap.put("B", "bbb");
         System.out.println(linkedHashMap);
+    }
+
+    // 练习：计算一个字符串中每个字符出现的次数
+    public static void getCharacterCount() {
+
+        // 从键盘获取字符
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入字符串：");
+        String str = sc.next();
+
+        // 创建 Map 集合，key 是字符，value 是字符个数
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        // 遍历字符串，统计字符个数
+        for (char c : str.toCharArray()) {
+            // 判断字符是否存在
+            if (map.containsKey(c)) {
+                // 字符 存在
+                Integer v = map.get(c);
+                v++;
+                map.put(c, v);
+            } else {
+                // 字符 不存在
+                map.put(c, 1);
+            }
+        }
+
+        // 遍历 Map，输出结果
+        for (Character c : map.keySet()) {
+            System.out.println("字符 " + c + " 的个数是：" + map.get(c));
+        }
+
     }
 }
