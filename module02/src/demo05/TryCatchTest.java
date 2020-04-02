@@ -3,7 +3,7 @@ package demo05;
 import java.io.IOException;
 
 /**
- * 捕获异常 try... catch
+ * 捕获异常 try-catch
  *
  * 格式：
  *
@@ -17,17 +17,24 @@ import java.io.IOException;
  *
  * 注意:
  * 1. try 中可以抛出多个异常，可以使用多个 catch 捕获
- * 2. 如果 try 中产生了异常，就会执行 catch，然后继续执行 try...catch 之后的代码
+ * 2. 如果 try 中产生了异常，就会执行 catch，然后继续执行 try-catch 之后的代码
+ *
+ * Throwable 类中定义的异常处理方法：
+ * public String getMessage()：获取异常的描述信息
+ * public String toString()：获取异常的类型和异常描述信息
+ * public void printStackTrace()：打印异常的跟踪栈信息并输出到控制台(最全面)
  *
  *
  *
  */
 public class TryCatchTest {
     public static void main(String[] args) {
-        // 使用 try...catch 处理异常
+        // 使用 try-catch 处理异常
         try {
             readFile("c:\\a.doc");
         } catch (IOException e) {
+//            System.out.println(e.getMessage()); // 文件的后缀名不正确
+//            System.out.println(e.toString()); // java.io.IOException: 文件的后缀名不正确
             e.printStackTrace();
         }
         System.out.println("后续代码");
