@@ -25,6 +25,24 @@ import java.io.IOException;
  * public void printStackTrace()：打印异常的跟踪栈信息并输出到控制台(最全面)
  *
  *
+ * finally 关键字
+ * 有一些特定的代码无论异常是否发生，都需要执行
+ * finally 关键字就是解决这个问题，在 finally 代码块中存放的代码都是一定会被执行的
+ *
+ * finally 不能单独使用
+ *
+ * 格式:
+ *
+ * try {
+ *     // ...
+ * } catch {
+ *     // ...
+ * } finally {
+ *     // 一定会执行的代码
+ * }
+ *
+ * 在 try 语句块中打开了一些物理资源(磁盘文件/网络连接/数据库连接等)
+ * 我们都得在使用完之后, 可以在 finally 中关闭打开的资源
  *
  */
 public class TryCatchTest {
@@ -36,6 +54,8 @@ public class TryCatchTest {
 //            System.out.println(e.getMessage()); // 文件的后缀名不正确
 //            System.out.println(e.toString()); // java.io.IOException: 文件的后缀名不正确
             e.printStackTrace();
+        } finally {
+            System.out.println("不管是否有异常都会执行");
         }
         System.out.println("后续代码");
     }
