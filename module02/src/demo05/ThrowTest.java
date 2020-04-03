@@ -8,7 +8,7 @@ import java.util.Objects;
  * 使用 throw 关键字在指定的方法中抛出指定的异常
  *
  * 格式：
- * ，。/throw new xxxException("异常产生的元素");
+ * throw new xxxException("异常产生的元素");
  *
  * 注意：
  * 1. throw 关键字必须写在方法的内部
@@ -30,7 +30,7 @@ public class ThrowTest {
         System.out.println(e);
 
         // 测试非空异常
-//        getObject(null);
+        getObject(null);
 
     }
     // 对方法的参数进行合法性校验
