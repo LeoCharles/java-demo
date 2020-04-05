@@ -15,7 +15,8 @@ package demo06;
  * public void run() :此线程要执行的任务在此处定义代码。
  * public static void sleep(long millis) :使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。
  * public static Thread currentThread() :返回对当前正在执行的线程对象的引用。
- *
+ * public int getPriority() 返回线程的优先级。
+ * public void setPriority(int newPriority) 更改线程的优先级。
  *
  */
 public class MyThread extends Thread {

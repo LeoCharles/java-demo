@@ -1,7 +1,7 @@
 package demo06;
 
 /**
- * 创建多线程的方法
+ * java.lang.Thread 类表示线程，所有的线程对象都必须是 Thread 类或其子类的实例。
  *
  * 继承 Thread 类创建多线程
  * 1. 创建一个 Thread 类的子类，在子类中重写 run 方法，设置线程任务
