@@ -18,7 +18,9 @@ public class SynchronizedTest {
     public static void main(String[] args) {
 //        testThreadUnsafe();
 //        testSynchronizedBlock();
-        testSynchronizedMethod();
+//        testSynchronizedMethod();
+        testLock();
+
 
     }
 
@@ -55,6 +57,20 @@ public class SynchronizedTest {
         // 创建 Runnable 接口的实现类对象
         TicketSynchronizedMethod run = new TicketSynchronizedMethod();
         System.out.println("run:" + run);
+        // 创建 Thread 类对象
+        Thread t0 = new Thread(run);
+        Thread t1 = new Thread(run);
+        Thread t2 = new Thread(run);
+        // 调用 start 方法，开启多线程
+        t0.start();
+        t1.start();
+        t2.start();
+    }
+
+    // Lock 锁机制解决线程安全问题
+    public static void testLock() {
+        // 创建 Runnable 接口的实现类对象
+        TicketLock run = new TicketLock();
         // 创建 Thread 类对象
         Thread t0 = new Thread(run);
         Thread t1 = new Thread(run);
