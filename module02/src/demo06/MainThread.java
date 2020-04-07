@@ -39,20 +39,38 @@ package demo06;
  * 当线程启动后，它可以在 Runnable、Blocked、Waiting 和 Timed Waiting 这几个状态之间切换
  * 直到最后变成 Terminated 状态，线程终止。
  *
+ * Timed Waiting 计时等待状态
+ * 1.调用 sleep(long m) 方法，线程就会进入到计时等待状态，睡眠时间结束后进入可运行或阻塞状态
+ * 2.调用 wait(long m) 方法，线程就会进入到计时等待状态，如果在等待时间结束后没有被 notify 唤醒，自定进入可运行或阻塞状态
+ *
+ * Blocked 锁阻塞状态
+ * 没有争取到锁对象的线程进入锁阻塞状态
+ *
+ * Waiting 无限等待状态
+ * 一个正在无限期等待另一个线程执行一个唤醒动作的线程处于无限等待状态
+ *
+ * void wait(): 在其他线程调用此对象的 notify() 或 notifyAll() 前，保持当前线程等待
+ * void notify(): 唤醒在此对象监视器(对象锁)上等待的单个线程，继续执行 wait 方法后的代码
+ * void notifyAll()：唤醒在此对象监视器(对象锁)上等待的所有线程
+ *
+ *
  */
 public class MainThread {
     public static void main(String[] args) {
 
-        testSleep();
+//        testSleep();
+        testWaitAndNotify();
+
 
     }
 
-    // sleep 方法模拟秒表
+    // Timed Waiting 计时等待状态
     public static void testSleep() {
         for (int i = 0; i < 60; i++) {
             System.out.println(i);
 
-            // 使用 Thread 类中的 sleep 方法，让程序睡眠指定的时间
+            // 使用 sleep 方法，让程序睡眠指定的时间
+            // 线程进入Timed Waiting 状态
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -61,6 +79,82 @@ public class MainThread {
         }
     }
 
+    // 等待与唤醒，线程执行的通信
+    // 消费者线程和生产者线程必须使用同步代码块，确保等待和唤醒只有一个在执行
+    // 同步锁对象必须确保唯一，只有锁对象才能调用 wait 和 notify 方法
+    public static void testWaitAndNotify() {
+        // 创建锁对象，保证唯一
+        final Object lock = new Object();
+
+        // 创建消费者线程
+        new Thread() {
+            @Override
+            public void run() {
+                // 确保等待和唤醒只有一个在执行，需要同步技术
+                synchronized (lock) {
+                    System.out.println("消费者 1 告诉生产者产品的种类和数量");
+
+                    // 调用 wait 方法，放弃 cpu 执行，进入无限等待状态
+                    try {
+                        lock.wait();
+//                        lock.wait(5000); // 计时等待,等待时间到，自动醒来
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 唤醒之后执行的代码
+                    System.out.println("消费者 1 被唤醒，可以使用产品了");
+                }
+
+            }
+        }.start(); // 开启线程
+
+        // 创建消费者线程
+        new Thread() {
+            @Override
+            public void run() {
+                // 确保等待和唤醒只有一个在执行，需要同步技术
+                synchronized (lock) {
+                    System.out.println("消费者 2 告诉生产者产品的种类和数量");
+
+                    // 调用 wait 方法，放弃 cpu 执行，进入无限等待状态
+                    try {
+                        lock.wait();
+//                        lock.wait(5000); // 计时等待,等待时间到，自动醒来
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 唤醒之后执行的代码
+                    System.out.println("消费者 2 被唤醒，可以使用产品了");
+                }
+
+            }
+        }.start(); // 开启线程
+
+        // 创建生产者线程
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    // 经过一段时间，生产产品
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // 确保等待和唤醒只有一个在执行，需要同步技术
+                synchronized (lock) {
+                    System.out.println("生产者生产出了产品，通知消费者");
+                    // 随机唤醒单个消费者，执行后续代码
+//                    lock.notify();
+                    // 唤醒所有消费者，执行后续代码
+                    lock.notifyAll();
+                }
+            }
+        }.start(); // 开启线程
+    }
 
 
 }
