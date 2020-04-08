@@ -1,5 +1,8 @@
 package demo06;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * 进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程。
  * 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程。
@@ -53,14 +56,31 @@ package demo06;
  * void notify(): 唤醒在此对象监视器(对象锁)上等待的单个线程，继续执行 wait 方法后的代码
  * void notifyAll()：唤醒在此对象监视器(对象锁)上等待的所有线程
  *
+ * 线程池
+ * 线程池就是一个容纳多个线程的容器，其中的线程可以反复使用，省去了频繁创建线程对象的操作。
+ *
+ * java.util.concurrent.Executors 线程工厂类，用来生产线程池
+ * Executors 类中创建线程池的静态方法：
+ * static ExecutorService newFixedThreadPool(int nThreads) ：创建一个可重用固定线程数的线程池。
+ * 返回值是 ExecutorService 接口的实现类对象
+ *
+ * java.util.concurrent.ExecutorService 线程池接口
+ * submit(Runnable task) : 获取线程池中的某一个线程对象，并执行
+ * void shutdown(): 关闭线程池(一般不用)
+ *
+ * 使用线程池步骤：
+ * 1. 使用 Executors 线程池工厂类中的 newFixedThreadPool 方法，生产一个指定线程数量的线程池
+ * 2. 创建 Runnable 实现类，重写 run 方法，设置线程任务
+ * 3. 调用 ExecutorService 中的 submit 方法，传递线程任务(Runnable 实现类)，开启线程
+ * 4. 调用 ExecutorService 中的 shutdown 方法，销毁线程池，一般不用
  *
  */
 public class MainThread {
     public static void main(String[] args) {
 
 //        testSleep();
-        testWaitAndNotify();
-
+//        testWaitAndNotify();
+        testThreadPool();
 
     }
 
@@ -156,5 +176,18 @@ public class MainThread {
         }.start(); // 开启线程
     }
 
+    // 线程池
+    public static void testThreadPool() {
+        // 创建线程池
+        ExecutorService es = Executors.newFixedThreadPool(3);
+        // 调用 submit 方法
+        es.submit(new MyRunnable());
+        es.submit(new MyRunnable());
+        es.submit(new MyRunnable());
+        es.submit(new MyRunnable());
+        // 线程池一直开启，使用完了线程会自动把线程归还给线程池，线程可以继续使用
 
+        // 销毁线程池
+        es.shutdown();
+    }
 }
