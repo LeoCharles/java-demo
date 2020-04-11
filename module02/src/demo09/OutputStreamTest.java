@@ -11,11 +11,11 @@ import java.util.Arrays;
  * java.io.OutputStream 抽象类是所有字节输出流的超类
  *
  * 字节输出流成员方法
- * public void close() ：关闭此输出流并释放与此流相关联的任何系统资源。
- * public void flush() ：刷新此输出流并强制任何缓冲的输出字节被写出。
- * public void write(byte[] b) ：将 b.length字节从指定的字节数组写入此输出流。
- * public void write(byte[] b, int off, int len) ：从指定的字节数组写入 len 字节，从偏移量 off 开始输出到此输出流。
- * public abstract void write(int b) ：将指定的字节输出流。
+ * public void close()：关闭此输出流并释放与此流相关联的任何系统资源。
+ * public void flush()：刷新此输出流并强制任何缓冲的输出字节被写出。
+ * public void write(byte[] b)：将 b.length字节从指定的字节数组写入此输出流。
+ * public void write(byte[] b, int off, int len)：从指定的字节数组写入 len 字节，从偏移量 off 开始输出到此输出流。
+ * public abstract void write(int b)：将指定的字节输出流。
  *
  * 子类：
  * ByteArrayOutputStream：字节数组输出流
@@ -40,29 +40,27 @@ import java.util.Arrays;
  * 2. 根据传入的参数创建创建一个文件
  * 3. 把流对象指向创建好的文件
  *
+ * 从内存写入数据到文件的原理：
+ * java程序 --> JVM(java虚拟机) --> OS(操作系统) --> OS调用写数据的方法，把数据写入文件中
+ *
  * 字节输出流的使用步骤：
  * 1. 创建一个 FileOutputStream 流对象，构造方法中传入写入数据的目的地
  * 2. 调用 write 方法，把输出写入到文件中
  * 3. 释放资源
- *
- * 从内存写入数据到文件的原理：
- * java程序 --> JVM(java虚拟机) --> OS(操作系统) --> OS调用写数据的方法，把数据写入文件中
- *
- *
  *
  */
 
 public class OutputStreamTest {
     public static void main(String[] args) throws IOException {
 //        testWriteOne();
-//        testWriteBytes();
+        testWriteBytes();
 //        testWriteString();
 //        testWriteAppend();
-        testWriteNewLine();
+//        testWriteNewLine();
 
     }
 
-    // 一次写入单个字节
+    // 一次写出单个字节
     public static void testWriteOne() throws IOException {
         // 创建一个 FileOutputStream 流对象，构造方法中传入写入数据的目的地
         FileOutputStream fos = new FileOutputStream("module02\\src\\demo09\\test.txt");
@@ -79,9 +77,9 @@ public class OutputStreamTest {
         //  0 - 127: 查 ASCII 表；其他的查系统默认码表(中文系统GBK)
     }
 
-    // 一次写入多个字节
+    // 一次写出多个字节
     public static void testWriteBytes() throws IOException {
-        // 传入一个 File 对象，创建 文件对象流
+        // 传入一个 File 对象，创建文件对象流
         FileOutputStream fos = new FileOutputStream(new File("module02\\src\\demo09\\test.txt"));
         // 一次写入多个字节
         byte[] bytes1 = {65, 66, 67, 68, 69};
@@ -93,7 +91,7 @@ public class OutputStreamTest {
 
         // write(byte[] b, int off, int len) 把字节数据的一部分写入到文件中
         // off：字节数组指定位置，len：写入的长度
-        fos.write(bytes1, 1, 2); // 从索引 1 开始，写入两个字节，也就是BC
+        fos.write(bytes1, 1, 2); // 从索引 1 开始，写出两个字节，也就是BC
 
         // 释放资源
         fos.close();
