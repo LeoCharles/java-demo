@@ -9,7 +9,7 @@ import java.io.IOException;
  *
  * java.io.InputStream 抽象类是所有字节输入流的超类
  *
- * 字节输入流成员方法：
+ * 字节输入流共性方法：
  * public abstract int read()：从输入流读取数据的下一个字节。
  * public int read(byte[] b)：从输入流中读取一些字节数，并将它们存储到字节数组 b中。
  * public void close()：关闭此输入流并释放与此流相关联的任何系统资源。

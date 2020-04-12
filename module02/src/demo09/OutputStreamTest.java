@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * java.io.OutputStream 抽象类是所有字节输出流的超类
  *
- * 字节输出流成员方法
+ * 字节输出流共性方法
  * public void close()：关闭此输出流并释放与此流相关联的任何系统资源。
  * public void flush()：刷新此输出流并强制任何缓冲的输出字节被写出。
  * public void write(byte[] b)：将 b.length字节从指定的字节数组写入此输出流。
