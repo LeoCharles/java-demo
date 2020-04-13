@@ -41,7 +41,7 @@ import java.io.IOException;
  *
  *
  * IO异常处理
- * JDK 1.7 前使用  try...catch...finally 代码块，处理异常
+ * JDK 1.7 之前使用  try...catch...finally 代码块，处理异常
  * 格式：
  * try {
  *     可能会产出异常的代码
@@ -52,12 +52,22 @@ import java.io.IOException;
  *     释放资源
  * }
  *
+ * JDK 1.7 之后，可以使用  try-with-resource 语句
+ * 在 try 后面加一个括号，在括号中定义流对象，try中的代码执行完毕，会自动把流对象释放，不用谢 finally
+ * 格式：
+ * try (定义流对象; 定义流对象; ...) {
+ *     可能会出现异常的代码
+ * } catch (异常类 变量名) {
+ *     处理异常
+ * }
+ *
  *
  */
 public class MainIO {
     public static void main(String[] args) throws IOException {
 //        copyFile();
-        testException();
+//        testException();
+        testHandleException();
     }
 
     // 复制文件
@@ -101,7 +111,7 @@ public class MainIO {
         System.out.println("复制文件共耗时：" + (e - s) + "毫秒");
     }
 
-    // IO 异常处理
+    // try...catch...finally 处理异常
     public static void testException () {
         // 提高变量作用域，并初始化
         FileWriter fw = null;
@@ -120,6 +130,22 @@ public class MainIO {
                 }
             }
         }
+    }
 
+    //  使用 try-with-resource 语句
+    public static void testHandleException() {
+        // jdk 1.7 定义流对象，使用完后自动释放，不需要 调用 close() 方法
+        try (
+            FileInputStream fis = new FileInputStream("module02\\src\\demo09\\java.png");
+            FileOutputStream fos = new FileOutputStream("module02\\src\\demo09\\java_copy.png")
+        ) {
+            byte[] bytes = new byte[1024];
+            int len = 0;
+            while ((len = fis.read(bytes)) != -1) {
+                fos.write(bytes, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
