@@ -2,6 +2,7 @@ package demo09;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -39,12 +40,24 @@ import java.io.IOException;
  * InputStream、OutputStream、Reader 和 Writer 都是同步 IO 的抽象类
  *
  *
+ * IO异常处理
+ * JDK 1.7 前使用  try...catch...finally 代码块，处理异常
+ * 格式：
+ * try {
+ *     可能会产出异常的代码
+ * } catch (异常类 变量名) {
+ *     处理异常
+ * } finally {
+ *     一定会执行的代码
+ *     释放资源
+ * }
  *
  *
  */
 public class MainIO {
     public static void main(String[] args) throws IOException {
-        copyFile();
+//        copyFile();
+        testException();
     }
 
     // 复制文件
@@ -86,5 +99,27 @@ public class MainIO {
 
         long e = System.currentTimeMillis();
         System.out.println("复制文件共耗时：" + (e - s) + "毫秒");
+    }
+
+    // IO 异常处理
+    public static void testException () {
+        // 提高变量作用域，并初始化
+        FileWriter fw = null;
+        try {
+            // 如果创建失败，则 fw就没有值，fw.close()就会报错
+            fw = new FileWriter("module02\\src\\demo09\\test.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // null 不能调用close方法
+            if(fw != null) {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 }
