@@ -1,20 +1,21 @@
 package demo13;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * TCP 客户端
+ * 通过 java.net.Socket 实现 TCP 客户端
  * 向服务器发送连接请求，向服务器发送数据，读取服务器回写的数据
  *
- * 创建步骤：
+ * 实现步骤：
  * 1. 创建一个客户端对象 Socket，构造方法中传入服务器的 IP 地址和端口号
  * 2. 使用 Socket 中的 getOutputStream 方法获取网络字节输出流 OutputStream 对象
  * 3. 使用网络字节输出流 OutputStream 对象中的 write 方法给服务器发送数据
  * 4. 使用 Socket 中的 getInputStream 方法获取网络字节输入流 InputStream 对象
  * 5. 使用网络字节输入流 InputStream 对象中的 read 方法，读取服务器回写的数据
- * 6. 释放资源
+ * 6. 释放资源(Socket)
  *
  *
  * 注意：
@@ -25,17 +26,25 @@ import java.net.Socket;
 
 public class TCPClient {
     public static void main(String[] args) throws IOException {
+        System.out.println("准备发送数据...");
         // 1. 创建 Socket 对象，传入 IP 地址和端口号
         Socket socket = new Socket("127.0.0.1", 8888);
 
-        // 2. 调用 getOutputStream 方法获取网络字节输出流
+        // 2. 调用 Socket 中的 getOutputStream 方法获取网络字节输出流
         OutputStream os = socket.getOutputStream();
 
         // 3. 调用字节输出流中的 write 方法，写入数据
-        os.write("你好，服务器".getBytes());
+        os.write("你好，服务器，这是发送的数据".getBytes());
 
+        // 4. 调用 Socket 中的 getInputStream 方法获取网络字节输入流
+        InputStream is = socket.getInputStream();
 
-        // 释放资源
+        // 5 调用字节输入流的 read 方法，读取服务器回写的数据
+        byte[] bytes = new byte[1024];
+        int len = is.read(bytes); // 一次性读取数据
+        System.out.println(new String(bytes, 0, len));
+
+        // 6. 释放资源
         socket.close();
     }
 }
