@@ -7,6 +7,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
+ * java.net.ServerSocket
+ * 此类实现服务器套接字。服务器套接字等待请求通过网络传入。它基于该请求执行某些操作，然后可能向请求者返回结果。
+ *
+ * 构造方法
+ * ServerSocket(int port)：创建绑定到特定端口的服务器套接字。
+ *
+ * 成员方法：
+ * Socket accept()：侦听并接受到此套接字的连接。
+ * 服务端通过 accept 方法获取客户端 Socket 对象，从而确定是哪个客户端发起的请求。
+ *
  * 通过 java.net.ServerSocket 实现 TCP 服务端
  * 接收客户端的请求，读取客户端发送的数据，给客户端回写数据
  *

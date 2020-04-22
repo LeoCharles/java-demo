@@ -7,6 +7,19 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
+ *
+ * TCP 文件上传(文件复制)
+ *
+ * 原理：
+ * 客户端输入流从硬盘读取文件数据到内存中，客户端输出流写出数据到服务端
+ * 服务器输入流读取文件数据到内存中，服务端输出流把数据写出到服务器硬盘
+ *
+ * 注意：
+ * 1. 客户端、服务器和本地硬盘进行读写，需要使用自己创建的字节流(本地流)
+ * 2. 客户端和服务器之间进行读写，必须使用 Socket 中提供的字节流对象(网络流)
+ *
+ *
+ *
  * 文件上传客户端
  *
  * 读取本地文件，上传到服务器，再读取服务器回写的数据
@@ -23,7 +36,6 @@ import java.net.Socket;
  * 6. 使用 Socket 对象中的 getInputStream 方法获取网络字节输入流 InputStream 对象
  * 7. 使用网络字节输入流 InputStream 对象中的 read 方法，读取服务器回写的数据
  * 8. 释放资源(FileInputStream, Socket)
- *
  *
  */
 
