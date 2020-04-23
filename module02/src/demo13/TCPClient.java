@@ -18,8 +18,8 @@ import java.net.Socket;
  * 成员方法：
  * InputStream getInputStream()：返回此套接字的输入流。
  * OutputStream getOutputStream()：返回此套接字的输出流。
- * void close()：关闭此套接字。
- *
+ * void close()：关闭此套接字，也将关闭相关的 InputStream 和 OutputStream。
+ * void shutdownOutput()：禁用此套接字的输出流。
  *
  * 通过 java.net.Socket 实现 TCP 客户端
  * 向服务器发送连接请求，向服务器发送数据，读取服务器回写的数据

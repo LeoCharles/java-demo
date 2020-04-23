@@ -32,7 +32,6 @@ public class TCPServerBS {
                 public void run() {
 
                     try {
-
                         // 调用 Socket 中的 getInputStream 方法获取网络字节输入流
                         InputStream is = socket.getInputStream();
 
@@ -82,16 +81,10 @@ public class TCPServerBS {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             }).start();
-
-
         }
-
         // 服务器不必关闭
 //        server.close();
     }
-
-
 }
