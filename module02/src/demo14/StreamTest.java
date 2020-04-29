@@ -7,7 +7,7 @@ import java.util.stream.Stream;
  * Java 1.8 引入 Stream 流，位于 java.util.stream 包。
  *
  * Stream 流是一个来自数据源的元素队列，数据源可以是集合，数组等。
- * Stream 流提支持函数式编程和链式操作，可以进行惰性求值。
+ * Stream 流支持函数式编程和链式操作，可以进行惰性求值。
  *
  * Stream 流操作的基础特征：
  * 1. 中间操作都会返回流对象本身。多个操作可以串联成一个管道，这样做可以对操作进行优化，比如延迟执行(laziness)和短路(short-circuiting)。
@@ -43,7 +43,7 @@ import java.util.stream.Stream;
  *
  * forEach(Consumer<> action)：接收一个 Consumer 接口参数，对流中的每个元素执行操作。
  * count()：统计流中元素的个数。
- * reduce(U identity, BiFunction<> accumulator, BinaryOperator<U> combiner)：所有元素按照聚合函数聚合成一个结果。
+ * reduce​(T identity, BinaryOperator<T> accumulator)：所有元素按照聚合函数聚合成一个结果。
  * collect(Collector<> collector)：每个元素收集到集合。
  * max​(Comparator<> comparator)：返回此流的最大元素。
  * min​(Comparator<> comparator)：返回此流的最小元素。
@@ -127,7 +127,6 @@ public class StreamTest {
         Stream<Integer> integerStream1 = Stream.of(arr1);
         String[] arr2 = {"aaa", "bbb", "ccc"};
         Stream<String> stringStream = Stream.of(arr2);
-
     }
 
     // void	forEach​(Consumer<? super T> action)：接收一个 Consumer 接口参数，对每个元素执行操作
@@ -202,10 +201,6 @@ public class StreamTest {
         Stream<Integer> newStream = Stream.concat(stream1, stream2);
 
         newStream.forEach(item -> System.out.println(item));
-
-
-
-
     }
 
     // long count()：统计流中元素的个数
