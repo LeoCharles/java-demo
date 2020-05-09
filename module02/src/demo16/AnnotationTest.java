@@ -15,20 +15,56 @@ package demo16;
  * `@SuppressWarnings`：压制编译器警告
  * `@Deprecated`：该注解标识的内容表示已过时
  *
- * 自定义注解
  *
- * 格式：
- *  元注解
- *  public @interface 注解名称 {}
+ * 元注解：用来修饰其他注解的注解
  *
- * 本质：注解本质是一个接口，继承自 java.lang.annotation.Annotation
- * 属性：接口中可以定义的成员方法
+ * `@Target`：定义注解能够被应用于源码的哪些位置：
+ *
+ * 类或接口：ElementType.TYPE
+ * 字段：ElementType.FIELD
+ * 方法：ElementType.METHOD
+ * 构造方法：ElementType.CONSTRUCTOR
+ * 方法参数：ElementType.PARAMETER
+ *
+ * `@Retention`：定义注解的生命周期：
+ *
+ * 仅编译期：RetentionPolicy.SOURCE
+ * 仅class文件：RetentionPolicy.CLASS
+ * 运行期：RetentionPolicy.RUNTIME
+ *
+ * 如果 @Retention不存在，则该注解默认为 CLASS
+ * 自定义的注解通常都是 RUNTIME，所以，要加上 @Retention(RetentionPolicy.RUNTIME) 这个元注解
+ *
+ * `@Repeatable`：定义注解是否可重复
+ *
+ * `@Inherited`：定义子类是否可继承父类定义的注解
+ *
+ * 使用反射技术读取注解的方法：
+ *
+ * 判断某个注解是否存在于 Class、Field、Method或 Constructor：
+ * Class.isAnnotationPresent(Class)
+ * Field.isAnnotationPresent(Class)
+ * Method.isAnnotationPresent(Class)
+ * Constructor.isAnnotationPresent(Class)
+ *
+ * 读取注解：
+ *
+ * Class.getAnnotation(Class)
+ * Field.getAnnotation(Class)
+ * Method.getAnnotation(Class)
+ * Constructor.getAnnotation(Class)
  *
  *
  */
 
 public class AnnotationTest {
     public static void main(String[] args) {
-
+        testAnnotation();
     }
+
+    @MyAnno
+    public static void testAnnotation() {
+        System.out.println("test");
+    }
+
 }
