@@ -105,7 +105,7 @@ public class JDBCTest {
     static void executeUpdate() {
         Connection conn = null;
         Statement stmt = null;
-        String url = "jdbc:mysql://localhost:3306/my_test?characterEncoding=utf8";
+        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
 
         try {
             // 创建连接
