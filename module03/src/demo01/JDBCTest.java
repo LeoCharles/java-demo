@@ -65,6 +65,12 @@ import java.util.Properties;
  * 4. 执行参数化 SQL 语句
  * 5. 关闭资源
  *
+ * JDBC 事务
+ * Connection 接口中与事务有关的方法：
+ * void setAutoCommit(boolean autoCommit)：参数是 true 或 false，如果为 false，表示关闭自动提交，相当于开启事务
+ * void commit()：提交事务
+ * void rollback()：回滚事务
+ *
  */
 
 public class JDBCTest {
@@ -72,6 +78,7 @@ public class JDBCTest {
 //        getConnection();
 //        executeUpdate();
         executeQuery();
+//        transaction();
     }
 
     // getConnection() 连接数据库
@@ -183,6 +190,49 @@ public class JDBCTest {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    // 开启事务 Transaction
+    public static void transaction() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            // 获取连接
+            conn = JDBCUtil.getConnection();
+
+            // 开启事务
+            conn.setAutoCommit(false);
+
+            // 获取 prepareStatement
+            ps = conn.prepareStatement("UPDATE account SET balance = balance - ? WHERE name = ?");
+
+            ps.setInt(1, 500);
+            ps.setString(2, "Leo");
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement("UPDATE account SET balance = balance + ? WHERE name = ?");
+            ps.setInt(1, 500);
+            ps.setString(2, "Rex");
+            ps.executeUpdate();
+
+            // 提交事务
+            conn.commit();
+            System.out.println("转载成功！");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            System.out.println("转账失败！");
         }
     }
 }
