@@ -4,31 +4,45 @@ import java.sql.*;
 import java.util.Properties;
 
 /**
- * 使用 JDBC 开发使用到的包
- * java.sql：所有与 JDBC 访问数据库相关的接口和类
- * javax.sql：数据库扩展包，提供数据库额外的功能。如：连接池
- * 数据库的驱动：由各大数据库厂商提供，是对 JDBC 接口的实现类
+ * JDBC(Java Database Connectivity) Java 数据库连接
+ *
+ * JDBC 定义了操作所有关系型数据库的规则（接口）
+ *
+ * 各个数据库厂商实现了 JDBC 这套接口，提供数据库驱动 jar 包
+ *
+ * JDBC 使用步骤：
+ * 1. 导入 jar bao
+ * 2. 注册驱动
+ * 3. 获取数据库连接对象 Connection
+ * 4. 定义 SQL
+ * 5. 获取执行 SQL 语句的对象 Statement
+ * 6. 执行 SQL, 接收返回结果
+ * 7. 处理结果
+ * 8. 释放资质
  *
  * JDBC 的核心 API
  *
- * DriverManager 类：1. 管理和注册数据库驱动 2. 获取数据库连接对象
- * Connection 接口：连接对象，可用于创建 Statement 和 PreparedStatement 对象
- * Statement 接口： SQL 语句对象，用于将 SQL 语句发送给数据库服务器
- * PreparedStatement 接口： SQL 语句对象，是 Statement 的子接口
- * ResultSet 接口： 用于封装数据库查询的结果集，返回给客户端 Java 程序
+ * DriverManager 驱动管理对象：管理和注册数据库驱动，获取数据库连接对象
+ * Connection 数据库连接对象：获取执行 SQL 的对象。管理事务
+ * Statement 执行 SQL 语句对象：用于执行 SQL 语句
+ * PreparedStatement 执行 SQL 语句对象： 用于执行 SQL 语句，是 Statement 的子接口
+ * ResultSet 结果集对象： 据库查询的结果集
  *
  * DriverManager 类：管理和注册驱动，创建数据库的连接
  * Connection getConnection (String url, String user, String password)：通过连接字符串，用户名，密码来得到数据库的连接对象
  * Connection getConnection (String url, Properties info)： 通过连接字符串，属性对象来得到连接对象
  * 连接数据库的 URL 地址格式：协议名:子协议://服务器名或 IP 地址:端口号/数据库名?参数=参数值
- * MySQL的 URL 格式：jdbc:mysql://<hostname>:<port>/<db>?key1=value1&key2=value2
+ * MySQL的 URL 格式：jdbc:mysql://ip地址(域名):端口号/数据库名称?key1=value1&key2=value2
  *
- * Connection 接口： 具体的实现类由数据库的厂商实现，代表一个连接对象
- * Statement createStatement() 创建一条 SQL 语句对象
+ * Connection 接口： 获取执行 SQL 的对象，事务管理
+ * Statement createStatement() 创建 SQL 语句对象
+ * void setAutoCommit(boolean autoCommit)：如果为 false，表示关闭自动提交，相当于开启事务
+ * void commit()：提交事务
+ * void rollback()：回滚事务
  *
- * Statement 接口：代表一条语句对象，用于发送 SQL 语句，用于执行静态 SQL 语句并返回它所生成结果的对象
- * int executeUpdate(String sql)：用于发送 DML 语句，增删改的操作，insert、update、delete。参数：SQL 语句。返回值：返回对数据库影响的行数
- * ResultSet executeQuery(String sql)：用于发送 DQL 语句，执行查询的操作，select。参数：SQL 语句。返回值：查询的结果集
+ * Statement 接口：用于执行静态 SQL 语句并返回它所生成结果的对象
+ * int executeUpdate(String sql)：执行 DML(INSERT、UPDATE、DELETE)、DDL(CREATE、ALTER、DROP)语句。返回对数据库影响的行数
+ * ResultSet executeQuery(String sql)：执行 DQL(SELECT) 语句。返回查询的结果集
  *
  * ResultSet 接口：封装数据库查询的结果集，对结果集进行遍历，取出每一条记录。
  * boolean next()：游标向下移动 1 行，返回 boolean 类型，如果还有下一条记录，返回 true，否则返回 false
@@ -65,24 +79,45 @@ import java.util.Properties;
  * 4. 执行参数化 SQL 语句
  * 5. 关闭资源
  *
- * JDBC 事务
- * Connection 接口中与事务有关的方法：
- * void setAutoCommit(boolean autoCommit)：参数是 true 或 false，如果为 false，表示关闭自动提交，相当于开启事务
- * void commit()：提交事务
- * void rollback()：回滚事务
- *
  */
 
 public class JDBCTest {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws Exception {
+        useJDBC();
 //        getConnection();
 //        executeUpdate();
-        executeQuery();
+//        executeQuery();
 //        transaction();
     }
 
+    // 使用 JDBC
+    public static void useJDBC() throws ClassNotFoundException, SQLException {
+        // 注册驱动，MySQL 5 以后不需要手动注册
+        Class.forName("com.mysql.jdbc.Driver");
+
+        // 获取数据库连接对象
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_test?useSSL=false", "root", "123456");
+
+        // 定义 SQL 语句
+        String sql = "SELECT * FROM teacher";
+
+        // 获取执行 SQL 语句对象 Statement
+        Statement stmt = conn.createStatement();
+
+        // 执行 sql
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            System.out.println(rs.getInt(1) + ". " + rs.getString(2));
+        }
+
+        // 释放资源
+        stmt.close();
+        conn.close();
+    }
+
     // getConnection() 连接数据库
-    static void getConnection() throws SQLException {
+    public static void getConnection() throws SQLException {
         Connection conn = null;
         String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
 
@@ -109,7 +144,7 @@ public class JDBCTest {
     }
 
     // executeUpdate() 增、删、改
-    static void executeUpdate() {
+    public static void executeUpdate() {
         Connection conn = null;
         Statement stmt = null;
         String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
@@ -151,7 +186,7 @@ public class JDBCTest {
     }
 
     // executeQuery() 查询
-    static void executeQuery() {
+    public static void executeQuery() {
 
         Connection conn = null;
         Statement stmt = null;
