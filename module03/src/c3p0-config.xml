@@ -1,0 +1,28 @@
+<c3p0-config>
+    <!-- 默认配置 -->
+    <default-config>
+        <!-- 数据库驱动名 -->
+        <property name="driverClass">com.mysql.jdbc.Driver</property>
+        <!-- 初始化申请连接数 -->
+        <property name="initialPoolSize">5</property>
+        <!-- 最大连接数 -->
+        <property name="maxPoolSize">10</property>
+        <!-- 超时时间 -->
+        <property name="checkoutTimeout">3000</property>
+    </default-config>
+
+    <!-- 指定名称的配置 -->
+    <named-config name="my_test">
+        <!-- 数据库 URL -->
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/my_test?useSSL=false</property>
+        <!-- 用户名 -->
+        <property name="user">root</property>
+        <!-- 密码 -->
+        <property name="password">123456</property>
+        <!-- 用户名 -->
+        <property name="user">root</property>
+        <!-- 密码 -->
+        <property name="password">123456</property>
+    </named-config>
+
+</c3p0-config>
