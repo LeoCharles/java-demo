@@ -22,11 +22,11 @@ import java.util.Properties;
  *
  * JDBC 的核心 API
  *
- * DriverManager 驱动管理对象：管理和注册数据库驱动，获取数据库连接对象
- * Connection 数据库连接对象：获取执行 SQL 的对象。管理事务
- * Statement 执行 SQL 语句对象：用于执行 SQL 语句
- * PreparedStatement 执行 SQL 语句对象： 用于执行 SQL 语句，是 Statement 的子接口
- * ResultSet 结果集对象： 据库查询的结果集
+ * DriverManager：驱动管理对象，管理和注册数据库驱动，获取数据库连接对象
+ * Connection：数据库连接对象，获取执行 SQL 的对象。管理事务
+ * Statement：执行静态 SQL 语句对象，用于执行静态 SQL 语句
+ * PreparedStatement：预编译 SQL 语句对象，用于执行 SQL 语句，是 Statement 的子接口
+ * ResultSet：结果集对象，数据库查询的结果集
  *
  * DriverManager 类：管理和注册驱动，创建数据库的连接
  * Connection getConnection (String url, String user, String password)：通过连接字符串，用户名，密码来得到数据库的连接对象
@@ -35,7 +35,7 @@ import java.util.Properties;
  * MySQL的 URL 格式：jdbc:mysql://ip地址(域名):端口号/数据库名称?key1=value1&key2=value2
  *
  * Connection 接口： 获取执行 SQL 的对象，事务管理
- * Statement createStatement() 创建 SQL 语句对象
+ * Statement createStatement()：创建 SQL 语句对象
  * void setAutoCommit(boolean autoCommit)：如果为 false，表示关闭自动提交，相当于开启事务
  * void commit()：提交事务
  * void rollback()：回滚事务
@@ -143,48 +143,6 @@ public class JDBCTest {
         }
     }
 
-    // executeUpdate() 增、删、改
-    public static void executeUpdate() {
-        Connection conn = null;
-        Statement stmt = null;
-        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
-
-        try {
-            // 创建连接
-            conn = DriverManager.getConnection(url, "root", "123456");
-
-            // 通过连接对象获取语句对象
-            stmt = conn.createStatement();
-
-            // SQL 语句
-            String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS teacher (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20) NOT NULL, course VARCHAR(20) NOT NULL)";
-            String INSERT_SQL_01 = "INSERT INTO teacher VALUES(null, '李雷', 'match')";
-            String INSERT_SQL_02 = "INSERT INTO teacher VALUES(null, '韩梅梅', 'english')";
-            String INSERT_SQL_03 = "INSERT INTO teacher VALUES(null, '张丽丽', 'chinese')";
-
-            // 执行 SQL
-            stmt.executeUpdate(CREATE_TABLE_SQL);
-            stmt.executeUpdate(INSERT_SQL_01);
-            stmt.executeUpdate(INSERT_SQL_02);
-            stmt.executeUpdate(INSERT_SQL_03);
-
-            System.out.println("数据库创建成功！");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 释放资源
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     // executeQuery() 查询
     public static void executeQuery() {
 
@@ -212,6 +170,48 @@ public class JDBCTest {
             }
 
             rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 释放资源
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // executeUpdate() 增、删、改
+    public static void executeUpdate() {
+        Connection conn = null;
+        Statement stmt = null;
+        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
+
+        try {
+            // 创建连接
+            conn = DriverManager.getConnection(url, "root", "123456");
+
+            // 通过连接对象获取语句对象
+            stmt = conn.createStatement();
+
+            // SQL 语句
+            String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS teacher (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20) NOT NULL, course VARCHAR(20) NOT NULL)";
+            String INSERT_SQL_01 = "INSERT INTO teacher VALUES(null, '李雷', 'match')";
+            String INSERT_SQL_02 = "INSERT INTO teacher VALUES(null, '韩梅梅', 'english')";
+            String INSERT_SQL_03 = "INSERT INTO teacher VALUES(null, '张丽丽', 'chinese')";
+
+            // 执行 SQL
+            stmt.executeUpdate(CREATE_TABLE_SQL);
+            stmt.executeUpdate(INSERT_SQL_01);
+            stmt.executeUpdate(INSERT_SQL_02);
+            stmt.executeUpdate(INSERT_SQL_03);
+
+            System.out.println("数据库创建成功！");
 
         } catch (SQLException e) {
             e.printStackTrace();

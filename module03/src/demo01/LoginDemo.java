@@ -89,8 +89,5 @@ public class LoginDemo {
             // 释放资源
             JDBCUtil.close(conn, ps, rs);
         }
-
-
     }
-
 }
