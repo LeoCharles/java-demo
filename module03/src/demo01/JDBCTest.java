@@ -254,7 +254,7 @@ public class JDBCTest {
 
             // 提交事务
             conn.commit();
-            System.out.println("转载成功！");
+            System.out.println("转款成功！");
 
         } catch (SQLException e) {
             e.printStackTrace();
