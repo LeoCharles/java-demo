@@ -1,7 +1,8 @@
 package demo01;
 
 import java.sql.*;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JDBC(Java Database Connectivity) Java 数据库连接
@@ -83,62 +84,65 @@ import java.util.Properties;
 
 public class JDBCTest {
     public static void main(String[] args) throws Exception {
-        useJDBC();
-//        getConnection();
+//        useJDBC();
+        executeQuery();
 //        executeUpdate();
-//        executeQuery();
-//        transaction();
+//        findAllTeacher();
+//        transferMoney();
     }
 
     // 使用 JDBC
-    public static void useJDBC() throws ClassNotFoundException, SQLException {
-        // 注册驱动，MySQL 5 以后不需要手动注册
-        Class.forName("com.mysql.jdbc.Driver");
+    public static void useJDBC(){
 
-        // 获取数据库连接对象
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_test?useSSL=false", "root", "123456");
-
-        // 定义 SQL 语句
-        String sql = "SELECT * FROM teacher";
-
-        // 获取执行 SQL 语句对象 Statement
-        Statement stmt = conn.createStatement();
-
-        // 执行 sql
-        ResultSet rs = stmt.executeQuery(sql);
-
-        while (rs.next()) {
-            System.out.println(rs.getInt(1) + ". " + rs.getString(2));
-        }
-
-        // 释放资源
-        stmt.close();
-        conn.close();
-    }
-
-    // getConnection() 连接数据库
-    public static void getConnection() throws SQLException {
         Connection conn = null;
-        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
-
-        // 属性对象
-        Properties info = new Properties();
-
-        // 把用户名和密码放在 info 对象
-        info.setProperty("user", "root");
-        info.setProperty("password", "123456");
+        Statement stmt = null;
+        ResultSet rs = null;
 
         try {
-            // 创建连接
-            conn = DriverManager.getConnection(url, info);
+            // 注册驱动，MySQL 5 以后不需要手动注册
+            Class.forName("com.mysql.jdbc.Driver");
+            // 获取数据库连接对象
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_test?useSSL=false", "root", "123456");
 
-            System.out.println(conn);
-        } catch (SQLException e) {
+            // 定义 SQL 语句
+            String sql = "SELECT * FROM teacher";
+
+            // 获取执行 SQL 语句对象 Statement
+            stmt = conn.createStatement();
+
+            // 执行 sql
+            rs = stmt.executeQuery(sql);
+
+
+            while (rs.next()) {
+                // 根据列编号获取值，从 1 开始
+                System.out.println(rs.getInt(1) + ". " + rs.getString(2));
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             // 释放资源
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             if (conn != null) {
-                conn.close();
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -148,41 +152,32 @@ public class JDBCTest {
 
         Connection conn = null;
         Statement stmt = null;
-        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
-
+        ResultSet rs = null;
 
         try {
-            // 创建连接
-            conn = DriverManager.getConnection(url, "root", "123456");
+            // 使用自定义JDBC工具类获取连接
+            conn = JDBCUtils.getConnection();
 
             // 通过连接对象得到语句对象
             stmt = conn.createStatement();
 
             // 执行 SQL 语句
-            ResultSet rs = stmt.executeQuery("SELECT id, name FROM teacher");
+            rs = stmt.executeQuery("SELECT * FROM student");
 
             while (rs.next()) {
-                // 通过序号获取数据，从 1 开始
-                int id = rs.getInt(1);
                 // 通过字段名获取数据
                 String name = rs.getString("name");
-                System.out.println(id + ":" + name);
+                int age = rs.getInt("age");
+                String sex = rs.getString("sex");
+                String address = rs.getString("address");
+                System.out.println("姓名：" + name + "，年龄：" + age + "，性别：" + sex + "，地址：" + address);
             }
-
-            rs.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             // 释放资源
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            JDBCUtils.close(conn, stmt, rs);
         }
     }
 
@@ -190,52 +185,103 @@ public class JDBCTest {
     public static void executeUpdate() {
         Connection conn = null;
         Statement stmt = null;
-        String url = "jdbc:mysql://localhost:3306/my_test?useSSL=false&characterEncoding=utf8";
 
         try {
-            // 创建连接
-            conn = DriverManager.getConnection(url, "root", "123456");
+            // 使用自定义JDBC工具类获取连接
+            conn = JDBCUtils.getConnection();
 
             // 通过连接对象获取语句对象
             stmt = conn.createStatement();
 
-            // SQL 语句
+            // 创建表
             String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS teacher (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20) NOT NULL, course VARCHAR(20) NOT NULL)";
-            String INSERT_SQL_01 = "INSERT INTO teacher VALUES(null, '李雷', 'match')";
-            String INSERT_SQL_02 = "INSERT INTO teacher VALUES(null, '韩梅梅', 'english')";
-            String INSERT_SQL_03 = "INSERT INTO teacher VALUES(null, '张丽丽', 'chinese')";
+
+            // 插入数据
+//            String UPDATE_SQL = "INSERT INTO teacher VALUES(null, '陈云慧', 'chinese')";
+
+            // 更新数据
+//            String UPDATE_SQL = "UPDATE teacher SET course = 'math' WHERE name = '李雷'";
+
+            // 删除数据
+            String UPDATE_SQL = "DELETE FROM teacher WHERE name = '张三'";
 
             // 执行 SQL
             stmt.executeUpdate(CREATE_TABLE_SQL);
-            stmt.executeUpdate(INSERT_SQL_01);
-            stmt.executeUpdate(INSERT_SQL_02);
-            stmt.executeUpdate(INSERT_SQL_03);
 
-            System.out.println("数据库创建成功！");
+            // 更新操作影响的记录数量
+            int i = stmt.executeUpdate(UPDATE_SQL);
+
+            System.out.println("更新了 " + i + " 条数据！");
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             // 释放资源
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            JDBCUtils.close(conn, stmt);
         }
     }
 
-    // 开启事务 Transaction
-    public static void transaction() {
+    // 查询 teacher 表中的数据，封装为对象
+    public static List<Teacher> findAllTeacher() {
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        List<Teacher> list = null;
+        Teacher teacher;
+
+        try {
+
+            // 使用自定义JDBC工具类获取连接
+            conn = JDBCUtils.getConnection();
+
+            // 定义 SQL
+            String sql = "SELECT * FROM teacher";
+
+            // 获取执行 SQL 的对象
+            stmt = conn.createStatement();
+
+            // 执行 SQL
+            rs = stmt.executeQuery(sql);
+
+            // 遍历结果集，封装对象，装置集合
+            list = new ArrayList<>();
+            while (rs.next()) {
+                // 获取数据
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String course = rs.getString("course");
+
+                // 创建对象并赋值
+                teacher = new Teacher();
+                teacher.setId(id);
+                teacher.setName(name);
+                teacher.setCourse(course);
+
+                // 封装集合
+                list.add(teacher);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 释放资源
+            JDBCUtils.close(conn, stmt, rs);
+        }
+
+        System.out.println(list);
+
+        return list;
+    }
+
+    // 使用事务完成转账操作
+    public static void transferMoney() {
         Connection conn = null;
         PreparedStatement ps = null;
 
         try {
             // 获取连接
-            conn = JDBCUtil.getConnection();
+            conn = JDBCUtils.getConnection();
 
             // 开启事务
             conn.setAutoCommit(false);

@@ -1,7 +1,6 @@
 package demo01;
 
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -30,7 +29,7 @@ public class LoginDemo {
 
         try {
             // 通过自定义 JDBC 工具类得到连接
-            conn = JDBCUtil.getConnection();
+            conn = JDBCUtils.getConnection();
             // 创建语句对象
             stmt = conn.createStatement();
 
@@ -48,7 +47,7 @@ public class LoginDemo {
             e.printStackTrace();
         } finally {
             // 释放资源
-            JDBCUtil.close(conn, stmt, rs);
+            JDBCUtils.close(conn, stmt, rs);
         }
     }
 
@@ -65,7 +64,7 @@ public class LoginDemo {
         try {
 
             // 连接对象
-            conn = JDBCUtil.getConnection();
+            conn = JDBCUtils.getConnection();
 
             // 获取语句对象
             ps = conn.prepareStatement(sql);
@@ -87,7 +86,7 @@ public class LoginDemo {
             e.printStackTrace();
         } finally {
             // 释放资源
-            JDBCUtil.close(conn, ps, rs);
+            JDBCUtils.close(conn, ps, rs);
         }
     }
 }
