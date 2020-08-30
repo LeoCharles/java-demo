@@ -85,10 +85,10 @@ import java.util.List;
 public class JDBCTest {
     public static void main(String[] args) throws Exception {
 //        useJDBC();
-        executeQuery();
+//        executeQuery();
 //        executeUpdate();
 //        findAllTeacher();
-//        transferMoney();
+        transferMoney();
     }
 
     // 使用 JDBC
