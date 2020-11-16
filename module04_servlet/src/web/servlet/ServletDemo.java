@@ -1,10 +1,11 @@
 package web.servlet;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 
 /**
- * 通过 web.xml 配置 servlet
+ * 通过 web.xml 配置 Servlet
  *
  * <servlet>
  *    <servlet-name>demo1</servlet-name>
@@ -14,9 +15,14 @@ import java.io.IOException;
  *    servlet-name>demo1</servlet-name>
  *    <url-pattern>/demo1</url-pattern>
  * </servlet-mapping>
+ *
+ * 通过注解 WebServlet("资源路径") 配置 Servlet
+ *
  */
 
-public class ServletDemo1 implements Servlet {
+
+@WebServlet("/demo2")
+public class ServletDemo implements Servlet {
 
     // 初始化方法，只会执行一次
     @Override

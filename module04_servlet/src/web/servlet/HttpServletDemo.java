@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 继承 HttpServlet 抽象类
- * 复写 doGet  doPost 等方法
+ * 1. 继承 HttpServlet 抽象类
+ * 2. 复写 doGet  doPost 等方法
+ *
+ *
  */
 
 @WebServlet("/demo3")
-public class ServletDemo3 extends HttpServlet {
+public class HttpServletDemo extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

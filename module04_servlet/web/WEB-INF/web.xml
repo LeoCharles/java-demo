@@ -7,7 +7,7 @@
     <!-- 配置 servlet -->
     <servlet>
         <servlet-name>demo1</servlet-name>
-        <servlet-class>web.servlet.ServletDemo1</servlet-class>
+        <servlet-class>web.servlet.ServletDemo</servlet-class>
     </servlet>
     <!-- 配置 servlet 映射 -->
     <servlet-mapping>
