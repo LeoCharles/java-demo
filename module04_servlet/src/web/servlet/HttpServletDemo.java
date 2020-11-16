@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 使用 HttpServlet:
  * 1. 继承 HttpServlet 抽象类
  * 2. 复写 doGet  doPost 等方法
  *
+ * HttpServletRequest:
  *
  */
 
