@@ -16,11 +16,14 @@ import java.util.Map;
  *  2. 创建 JDBCTemplate 对象，依赖于数据源 DataSource
  *      JdbcTemplate template = new JdbcTemplate(ds)
  *  3. 调用 JDBCTemplate 里的方法来完成 CRUD 操作
- *      update(): 执行 DML 语句。增、删、改语句
- *      queryForMap(): 查询结果将结果集封装为 Map 集合，将列名作为 key，将值作为 value
- *      queryForList():查询结果将结果集封装为 List 集合
- *      query():查询结果，将结果封装为 JavaBean 对象。一般使用 BeanPropertyRowMapper 实现类，完成 JavaBean 自动封装
- *      queryForObject()：查询结果，将结果封装为对象。一般用于聚合函数查询
+ *
+ * 方法：
+ *  update(): 执行 DML 语句。用于增、删、改操作
+ *  queryForMap(): 将查询结果集封装为 Map 集合，将列名作为 key，将值作为 value，将这条记录封装为一个 Map 集合，集合长度只能是1
+ *  queryForList(): 将查询结果封装为 List 集合，先将每一条记录封装为一个 Map 集合，再将 Map 集合装载到 List 集合
+ *  query():将查询结果封装为 JavaBean 对象，一般使用 `BeanPropertyRowMapper` 实现类，完成 JavaBean 自动封装
+ *      new BeanPropertyRowMapper<类型>(类型.class)
+ *  queryForObject()：查询结果，将结果封装为对象。一般用于聚合函数查询
  */
 
 public class JDBCTemplateDemo {
