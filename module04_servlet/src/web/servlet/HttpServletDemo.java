@@ -12,8 +12,6 @@ import java.io.IOException;
  * 1. 继承 HttpServlet 抽象类
  * 2. 复写 doGet  doPost 等方法
  *
- * HttpServletRequest:
- *
  */
 
 @WebServlet("/demo3")
