@@ -1,5 +1,6 @@
 package web.servlet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,13 +43,25 @@ import java.util.Set;
  * getParameterMap(): 获取所有参数的 Map 集合
  *
  * 请求转发
- * 一种在服务器内部资源跳转方法
+ * 只能转发到当前服务器内部资源中，浏览器访问路径不变，转发是一次请求
+ * getRequestDispatcher()：通过 request 对象获取获取转发器对象
+ * forward(): RequestDispatcher 对象来进行转发
  *
- * 共享数据
+ * request 域：
+ * 一次请求的范围，一般用于请求转发的多个资源中共享数据
+ * setAttribute(): 存储数据
+ * getAttitude(): 通过键获取值
+ * removeAttribute(): 通过键移除键值对
  *
- * 获取 ServletContext
- *
- *
+ * ServletContext 对象
+ * 代表整个 Web 应用，可以和服务器通信
+ * 功能：
+ * 1. 获取 MIME 类型
+ * 2. 是一个域对象，可以用来共享数据
+ * 3. 获取文件的真实路径
+ *  * 获取：
+ * request.getServletContext(): 获取 ServletContext 对象
+ * this.getServletContext(): 直接从 HttpServlet 获取 ServletContext 对象
  *
  */
 
@@ -123,8 +136,10 @@ public class RequestDemo extends HttpServlet {
 
         // 根据参数名获取参数值的数组
         String[] hobbies = request.getParameterValues("hobby");
-        for (String hobby : hobbies) {
-            System.out.println(hobby);
+        if (hobbies != null) {
+            for (String hobby : hobbies) {
+                System.out.println(hobby);
+            }
         }
 
         // 获取所有请求参数
@@ -144,5 +159,17 @@ public class RequestDemo extends HttpServlet {
                 System.out.println(key + ":" + value);
             }
         }
+
+        // 共享数据，可以在转发之前存储数据到 request 域中
+        request.setAttribute("msg", "hello");
+        // 在转发后的 Servlet 中获取数据
+        // Object msg = request.getAttribute("msg");
+
+        // 请求转发，先获取转发器对象，再调用 forward() 方法转发
+        // request.getRequestDispatcher("/register.html").forward(request, response);
+
+        // 获取 ServletContext，可以和服务器通信
+        ServletContext servletContext = request.getServletContext();
+
     }
 }
