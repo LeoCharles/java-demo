@@ -12,6 +12,7 @@
       <li><a href="/servlet_demo/register.html">注册页</a></li>
       <li><a href="/servlet_demo/request_demo?name=leo&age=20">请求对象</a></li>
       <li><a href="/servlet_demo/response_demo">响应对象</a></li>
+      <li><a href="/servlet_demo/servlet_context">ServletContext对象</a></li>
     </ul>
   </body>
 </html>

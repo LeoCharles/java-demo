@@ -53,15 +53,6 @@ import java.util.Set;
  * getAttitude(): 通过键获取值
  * removeAttribute(): 通过键移除键值对
  *
- * ServletContext 对象
- * 代表整个 Web 应用，可以和服务器通信
- * 功能：
- * 1. 获取 MIME 类型
- * 2. 是一个域对象，可以用来共享数据
- * 3. 获取文件的真实路径
- *  * 获取：
- * request.getServletContext(): 获取 ServletContext 对象
- * this.getServletContext(): 直接从 HttpServlet 获取 ServletContext 对象
  *
  */
 
@@ -167,9 +158,6 @@ public class RequestDemo extends HttpServlet {
 
         // 请求转发，先获取转发器对象，再调用 forward() 方法转发
         // request.getRequestDispatcher("/register.html").forward(request, response);
-
-        // 获取 ServletContext，可以和服务器通信
-        ServletContext servletContext = request.getServletContext();
 
     }
 }
