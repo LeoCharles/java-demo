@@ -11,6 +11,7 @@
       <li><a href="/servlet_demo/demo2">通过注解配置 servlet</a></li>
       <li><a href="/servlet_demo/register.html">注册页</a></li>
       <li><a href="/servlet_demo/request_demo?name=leo&age=20">请求对象</a></li>
+      <li><a href="/servlet_demo/response_demo">响应对象</a></li>
     </ul>
   </body>
 </html>
