@@ -17,7 +17,7 @@ import java.util.Set;
  * ServletRequest(接口) -->  HttpServletRequest(接口) --> RequestFacade(实现类，Tomcat实现)
  *
  * 获取请求行数据：
- * etMethod()：请求方法
+ * getMethod()：请求方法
  * getContextPath()：获取虚拟目录
  * getServletPath()：获取 Servlet 路径
  * getQueryString()：获取 GET 请求参数
@@ -45,7 +45,7 @@ import java.util.Set;
  * 请求转发
  * 只能转发到当前服务器内部资源中，浏览器访问路径不变，转发是一次请求
  * getRequestDispatcher()：通过 request 对象获取获取转发器对象
- * forward(): RequestDispatcher 对象来进行转发
+ * forward(): 转发器对象调用该方法进行转发
  *
  * request 域：
  * 一次请求的范围，一般用于请求转发的多个资源中共享数据
