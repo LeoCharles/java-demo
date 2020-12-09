@@ -30,7 +30,7 @@ import java.io.IOException;
  *
  */
 
-@WebServlet("servlet_context")
+@WebServlet("/servlet_context")
 public class ServletContextDemo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -49,5 +49,13 @@ public class ServletContextDemo extends HttpServlet {
         servletContext.setAttribute("msg", "hello");
 
         // 获取文件真实路径
+        String p1 = servletContext.getRealPath("/index.jsp"); // 访问 web 目录下资源
+        System.out.println(p1);
+
+        String p2 = servletContext.getRealPath("/WEB-INF/web.xml"); // 访问 WEB-INF目录下的资源
+        System.out.println(p2);
+
+        String p3 = servletContext.getRealPath("/WEB-INF/classes/readme.txt"); // src 目录下的资源会被放到/WEB-INF/classes 目录下
+        System.out.println(p3);
     }
 }
