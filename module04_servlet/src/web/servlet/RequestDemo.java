@@ -157,7 +157,7 @@ public class RequestDemo extends HttpServlet {
         // Object msg = request.getAttribute("msg");
 
         // 请求转发，先获取转发器对象，再调用 forward() 方法转发
-        // request.getRequestDispatcher("/register.html").forward(request, response);
+        // request.getRequestDispatcher("/register.jsp").forward(request, response);
 
     }
 }
