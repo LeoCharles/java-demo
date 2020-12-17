@@ -31,7 +31,7 @@ public class CheckCodeServlet extends HttpServlet {
         // 填充背景色
         g.fillRect(0, 0, width, height);
         // 设置画笔颜色
-        g.setColor(Color.GRAY);
+        g.setColor(Color.BLACK);
         // 画边框
         g.drawRect(0, 0, width - 1, height -1);
 
@@ -50,7 +50,7 @@ public class CheckCodeServlet extends HttpServlet {
             //将字符写入验证码图片
             g.setColor(Color.RED);
             g.setFont(new Font("Times New Roman",Font.BOLD,24));
-            g.drawString(ch + "", width / 4 * i, height * 2 / 3);
+            g.drawString(ch + "", width / 4 * i + 5, height * 2 / 3);
         }
 
         // 将验证码存入 Session

@@ -1,24 +1,35 @@
 .form {
     width: 300px;
     margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #eee;
 }
 .form-header {
+    height: 50px;
     line-height: 50px;
     font-size: 16px;
     text-align: center;
 }
 .form-footer {
-    line-height: 50px;
+    margin: 20px auto;
     text-align: center;
 }
 .form-item {
+    height: 50px;
     line-height: 50px;
 }
 .form-item .label-name {
     display: inline-block;
     width: 70px;
 }
-.form-item input {
+.form-item .input {
     width: 200px;
     height: 30px;
+}
+.form-item .short.input {
+    width: 90px;
+}
+.error {
+    color: #ff3300;
 }

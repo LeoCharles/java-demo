@@ -5,7 +5,7 @@
     <title>servlet</title>
   </head>
   <body>
-    <h1>hello servlet demo</h1>
+    <h1>hello <%= request.getSession().getAttribute("user") == null ? "servlet" : request.getSession().getAttribute("user") %></h1>
     <ul>
       <li><a href="/servlet_demo/demo1">通过 web.xml 配置 servlet</a></li>
       <li><a href="/servlet_demo/demo2">通过注解配置 servlet</a></li>

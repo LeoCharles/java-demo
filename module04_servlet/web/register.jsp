@@ -10,13 +10,13 @@
         <div class="form-item">
             <label>
                 <span class="label-name">用户名：</span>
-                <input type="text" name="name" placeholder="请输入用户名">
+                <input class="input" type="text" name="name" placeholder="请输入用户名">
             </label>
         </div>
         <div class="form-item">
             <label>
                 <span class="label-name">密码：</span>
-                <input type="password" name="password" placeholder="请输入密码">
+                <input class="input" type="password" name="password" placeholder="请输入密码">
             </label>
         </div>
         <div class="form-item">

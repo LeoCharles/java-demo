@@ -3,6 +3,13 @@
 <head>
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script>
+        window.onload = function () {
+            document.getElementById("check-code").onclick = function () {
+                this.src = "/servlet_demo/check_code_servlet?time=" + new Date().getTime();
+            }
+        }
+    </script>
 </head>
 <body>
     <form action="/servlet_demo/login_servlet" method="post" class="form">
@@ -10,24 +17,28 @@
         <div class="form-item">
             <label>
                 <span class="label-name">用户名：</span>
-                <input type="text" name="name" placeholder="请输入用户名">
+                <input class="input" type="text" name="username" placeholder="请输入用户名">
             </label>
         </div>
         <div class="form-item">
             <label>
                 <span class="label-name">密码：</span>
-                <input type="password" name="password" placeholder="请输入密码">
+                <input class="input" type="password" name="password" placeholder="请输入密码">
             </label>
         </div>
         <div class="form-item">
             <label>
                 <span class="label-name">验证码：</span>
-                <img src="/servlet_demo/check_code_servlet"  alt="check_code">
-                <input type="text" name="check_code" style="width: 90px;" placeholder="请输入验证码">
+                <img src="/servlet_demo/check_code_servlet" id="check-code" style="vertical-align: middle;"  alt="check_code">
+                <input class="input short" type="text" name="checkCode" placeholder="请输入验证码">
             </label>
         </div>
         <div class="form-footer">
             <button type="submit">登录</button>
+        </div>
+        <div class="error">
+            <span><%= request.getAttribute("check_code_error") == null ? "" : request.getAttribute("check_code_error")%></span>
+            <span><%= request.getAttribute("login_error") == null ? "" : request.getAttribute("login_error")%></span>
         </div>
     </form>
 </body>
