@@ -37,8 +37,8 @@
             <button type="submit">登录</button>
         </div>
         <div class="error">
-            <span><%= request.getAttribute("check_code_error") == null ? "" : request.getAttribute("check_code_error")%></span>
-            <span><%= request.getAttribute("login_error") == null ? "" : request.getAttribute("login_error")%></span>
+            ${requestScope.check_code_error}
+            ${requestScope.login_error}
         </div>
     </form>
 </body>
