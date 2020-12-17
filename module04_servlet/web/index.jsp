@@ -7,17 +7,17 @@
   <body>
     <h1>hello <%= request.getSession().getAttribute("user") == null ? "servlet" : request.getSession().getAttribute("user") %></h1>
     <ul>
-      <li><a href="/servlet_demo/demo1">通过 web.xml 配置 servlet</a></li>
-      <li><a href="/servlet_demo/demo2">通过注解配置 servlet</a></li>
-      <li><a href="/servlet_demo/register.jsp">注册页</a></li>
-      <li><a href="/servlet_demo/login.jsp">登录页</a></li>
-      <li><a href="/servlet_demo/check_code_servlet">验证码</a></li>
-      <li><a href="/servlet_demo/request_demo?name=leo&age=20">请求对象</a></li>
-      <li><a href="/servlet_demo/response_demo">响应对象</a></li>
-      <li><a href="/servlet_demo/servlet_context">ServletContext对象</a></li>
-      <li><a href="/servlet_demo/download_servlet?filename=java.jpg">图片下载</a></li>
-      <li><a href="/servlet_demo/cookie_servlet">Cookie</a></li>
-      <li><a href="/servlet_demo/session_servlet">Session</a></li>
+      <li><a href="${pageContext.request.contextPath}/demo1">通过 web.xml 配置 servlet</a></li>
+      <li><a href="${pageContext.request.contextPath}/demo2">通过注解配置 servlet</a></li>
+      <li><a href="${pageContext.request.contextPath}/register.jsp">注册页</a></li>
+      <li><a href="${pageContext.request.contextPath}/login.jsp">登录页</a></li>
+      <li><a href="${pageContext.request.contextPath}/check_code_servlet">验证码</a></li>
+      <li><a href="${pageContext.request.contextPath}/request_demo?name=leo&age=20">请求对象</a></li>
+      <li><a href="${pageContext.request.contextPath}/response_demo">响应对象</a></li>
+      <li><a href="${pageContext.request.contextPath}/servlet_context">ServletContext对象</a></li>
+      <li><a href="${pageContext.request.contextPath}/download_servlet?filename=java.jpg">图片下载</a></li>
+      <li><a href="${pageContext.request.contextPath}/cookie_servlet">Cookie</a></li>
+      <li><a href="${pageContext.request.contextPath}/session_servlet">Session</a></li>
     </ul>
 
     <%

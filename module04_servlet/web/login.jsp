@@ -12,7 +12,7 @@
     </script>
 </head>
 <body>
-    <form action="/servlet_demo/login_servlet" method="post" class="form">
+    <form action="${pageContext.request.contextPath}/login_servlet" method="post" class="form">
         <div class="form-header">登录页</div>
         <div class="form-item">
             <label>
@@ -29,7 +29,7 @@
         <div class="form-item">
             <label>
                 <span class="label-name">验证码：</span>
-                <img src="/servlet_demo/check_code_servlet" id="check-code" style="vertical-align: middle;"  alt="check_code">
+                <img src="${pageContext.request.contextPath}/check_code_servlet" id="check-code" style="vertical-align: middle;"  alt="check_code">
                 <input class="input short" type="text" name="checkCode" placeholder="请输入验证码">
             </label>
         </div>
