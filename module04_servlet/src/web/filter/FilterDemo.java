@@ -32,10 +32,22 @@ import java.io.IOException;
  * 1. 具体资源路径：/index.jsp
  * 2. 拦截目录：/user/*  访问 /user 下的所有资源时过滤器都会被执行
  * 3. 后缀名拦截：*.jsp 访问所有的 jsp 文件都会被拦截
+ * 4. 拦截所有资源： /*  访问所有资源时，都会被拦截
+ *
+ * 拦截方式配置：
+ * 使用注解设置 dispatcherTypes 属性
+ * REQUEST：浏览器直接访问时触发过滤器，默认
+ * FORWARD：转发访问时触发过滤器
+ * INCLUDE：包含访问资源
+ * ERROR：错误跳转资源
+ * ASYNC：异步访问
+ *
  *
  */
 
-@WebFilter("/*") // 访问所有资源都会执行该过滤器
+
+@WebFilter(value = "/*", dispatcherTypes = DispatcherType.REQUEST) // 直接请求时触发过滤器
+//@WebFilter(value = "/index.jsp", dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD}) // 转发或直接访问 index.jsp 时触发过滤器
 public class FilterDemo implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
