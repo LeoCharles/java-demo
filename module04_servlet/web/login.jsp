@@ -6,7 +6,7 @@
     <script>
         window.onload = function () {
             document.getElementById("check-code").onclick = function () {
-                this.src = "/servlet_demo/check_code_servlet?time=" + new Date().getTime();
+                this.src = "/module04_servlet/check_code_servlet?time=" + new Date().getTime();
             }
         }
     </script>

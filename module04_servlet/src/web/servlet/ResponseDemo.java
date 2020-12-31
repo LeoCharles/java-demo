@@ -29,9 +29,9 @@ import java.nio.charset.StandardCharsets;
  * 重定向
  * 设置状态码为302，设置响应头 location
  * response.setStatus(302);
- * response.setHeader("location", "/servlet_demo/request_demo");
+ * response.setHeader("location", "/module04_servlet/request_demo");
  * 简单的重定向方法:
- * response.sendRedirect("/servlet_demo/request_demo");
+ * response.sendRedirect("/module04_servlet/request_demo");
  * 特点:
  * 地址栏发生变化
  * 可以访问其他站点(服务器)的资源
@@ -56,10 +56,10 @@ public class ResponseDemo extends HttpServlet {
         // 设置状态码
         response.setStatus(302);
         // 设置响应头
-        response.setHeader("location", "/servlet_demo/request_demo");
+        response.setHeader("location", "/module04_servlet/request_demo");
 
         // 简单的重定向方法
-        response.sendRedirect("/servlet_demo/request_demo");
+        response.sendRedirect("/module04_servlet/request_demo");
         */
 
 

@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <form action="/servlet_demo/request_demo" method="post" class="form">
+    <form action="${pageContext.request.contextPath}/request_demo" method="post" class="form">
         <div class="form-header">注册页</div>
         <div class="form-item">
             <label>
