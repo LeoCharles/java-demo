@@ -18,6 +18,7 @@
       <li><a href="${pageContext.request.contextPath}/download_servlet?filename=java.jpg">图片下载</a></li>
       <li><a href="${pageContext.request.contextPath}/cookie_servlet">Cookie</a></li>
       <li><a href="${pageContext.request.contextPath}/session_servlet">Session</a></li>
+      <li><a href="${pageContext.request.contextPath}/test.jsp">测试页</a></li>
     </ul>
 
     <%

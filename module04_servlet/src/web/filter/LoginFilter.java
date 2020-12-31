@@ -3,7 +3,12 @@ package web.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+/**
+ * 验证是否登录
+ */
 
 @WebFilter("/*")
 public class LoginFilter implements Filter {
@@ -18,12 +23,12 @@ public class LoginFilter implements Filter {
 
         // 排除登录相关的资源以及 css、js、图片、验证码等资源
         if (uri.contains("/index.jsp")
-                || uri.contains("/login.jsp")
-                || uri.contains("/css/")
-                || uri.contains("/js/")
-                || uri.contains("/image/")
-                || uri.contains("login_servlet")
-                || uri.contains("check_code_servlet")) {
+            || uri.contains("/login.jsp")
+            || uri.contains("/css/")
+            || uri.contains("/js/")
+            || uri.contains("/image/")
+            || uri.contains("login_servlet")
+            || uri.contains("check_code_servlet")) {
             chain.doFilter(req, resp);
         } else {
             // 判断用户是否登录
@@ -37,14 +42,12 @@ public class LoginFilter implements Filter {
                 request.setAttribute("login_msg", "您尚未登录，请先登录");
 
                 // 跳转到登录页
-                request.getRequestDispatcher("/login.jsp").forward(req, resp);
+//                request.getRequestDispatcher("/login.jsp").forward(req, resp);
+                HttpServletResponse response = (HttpServletResponse) resp;
+                response.sendRedirect("/module04_servlet/login.jsp");
             }
 
         }
-
-        // 判断资源请求路径
-
-
 
     }
 
